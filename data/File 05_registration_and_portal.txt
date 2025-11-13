@@ -1,0 +1,18 @@
+Title: LAU Registration, Portal, and Academic Advising
+
+All students use the LAU Student Information System (SIS) at https://sis.lau.edu.lb for registration, tuition payment, and academic tracking.
+
+Registration Steps:
+1. Log in to SIS using your LAU credentials.
+2. Review your Degree Audit under “Advising.”
+3. Meet your assigned academic advisor to discuss your semester plan.
+4. Register during your allocated time slot.
+5. Confirm and pay tuition to finalize registration.
+
+The portal also provides:
+- Course Catalog and Degree Audit
+- Grade Reports and GPA Calculation
+- Financial Statements and Invoices
+- Access to Blackboard (learning.lau.edu.lb)
+
+Late registration, add/drop, and withdrawal deadlines are listed in the Academic Calendar.

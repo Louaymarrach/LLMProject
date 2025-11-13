@@ -1,0 +1,26 @@
+# Core LangChain
+langchain>=1.0.5
+
+# For Google Gemini
+langchain-google-genai>=0.8.5
+langchain_community>=0.1.16
+
+# Vector database
+faiss-cpu>=1.12.0
+
+# Embeddings
+tiktoken>=0.12.0
+
+# Document handling
+pdfplumber>=0.11.8
+PyPDF2>=3.0.1
+
+# Utilities
+python-dotenv>=1.2.1
+pandas>=2.3.3
+
+# Optional front-end / app
+streamlit>=1.51.0
+
+# OpenAI (if you also want to use OpenAI models)
+openai>=2.7.2
