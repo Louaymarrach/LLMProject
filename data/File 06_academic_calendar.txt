@@ -1,22 +1,496 @@
-Title: Academic Calendar and Important Deadlines
+LAU Academic & Events Calendar (Extract: Fall 2025 – Summer 2026)
+All events apply to both Beirut and Byblos campuses.
 
-LAU follows the semester system with Fall, Spring, and Summer terms. The Academic Calendar outlines key academic events:
-
-- **Fall Semester (September – December):**
-  - Orientation: First week of September
-  - Add/Drop: First 2 weeks of classes
-  - Midterms: October
-  - Final Exams: Mid-December
-
-- **Spring Semester (February – May):**
-  - Registration: January
-  - Midterms: March
-  - Finals: May
-
-- **Summer Term (June – August):**
-  - Short 6–8 week courses for selected subjects.
-
-Other Key Dates:
-- National Holidays (e.g., Independence Day, Labor Day)
-- Graduation Ceremonies in June
-- Deadlines for tuition payment, withdrawal, and incomplete grade resolution.
+---
+Title: Beirut Economics Research Seminar Series – Frontier Rule and Conflict
+StartDate: 2025-11-05
+EndDate: 2025-11-05
+Location: LAU AKSOB
+Description: Economics research seminar co-organized by LAU and AUB, featuring Dr. Adeel Malik and open to the wider economics community.
+---
+Title: Deadline for withdrawal from courses of fall 2025 (WP/WF)
+StartDate: 2025-11-06
+EndDate: 2025-11-06
+Location: 
+Description: Last day for students to withdraw from fall 2025 courses with WP or WF notation on the transcript.
+---
+Title: Advising for current students for spring 2026
+StartDate: 2025-11-19
+EndDate: 2025-12-05
+Location: 
+Description: Academic advising period for currently enrolled students planning their spring 2026 course schedules.
+---
+Title: Holiday: Independence Day
+StartDate: 2025-11-22
+EndDate: 2025-11-22
+Location: 
+Description: University closed in observance of Lebanese Independence Day.
+---
+Title: Last day for intercampus transfer for spring 2026
+StartDate: 2025-11-26
+EndDate: 2025-11-26
+Location: 
+Description: Final date to submit and process intercampus transfer requests effective spring 2026.
+---
+Title: Registration for current students for spring 2026
+StartDate: 2025-12-01
+EndDate: 2025-12-05
+Location: 
+Description: Online registration window for continuing students to enroll in spring 2026 courses.
+---
+Title: Fall 2025 classes end
+StartDate: 2025-12-05
+EndDate: 2025-12-05
+Location: 
+Description: Last day of regular instruction for the fall 2025 semester.
+---
+Title: Reading period (Fall 2025)
+StartDate: 2025-12-06
+EndDate: 2025-12-08
+Location: 
+Description: Study days reserved for students to prepare for final examinations.
+---
+Title: Fall 2025 final exams
+StartDate: 2025-12-09
+EndDate: 2025-12-19
+Location: 
+Description: Official examination period for fall 2025 courses.
+---
+Title: Fall 2025 Term B classes end for graduate online programs
+StartDate: 2025-12-17
+EndDate: 2025-12-17
+Location: 
+Description: End of instruction for Term B courses in graduate online programs.
+---
+Title: Holiday: Christmas Day
+StartDate: 2025-12-25
+EndDate: 2025-12-25
+Location: 
+Description: University closed in observance of Christmas Day.
+---
+Title: Deadline for early application to the medical school for academic year 2026–2027
+StartDate: 2025-12-31
+EndDate: 2025-12-31
+Location: 
+Description: Cutoff date for early applicants to submit complete files to the medical school for AY 2026–2027.
+---
+Title: Holiday: New Year’s Day
+StartDate: 2026-01-01
+EndDate: 2026-01-01
+Location: 
+Description: University closed in observance of New Year’s Day.
+---
+Title: Holiday: Armenian Christmas
+StartDate: 2026-01-06
+EndDate: 2026-01-06
+Location: 
+Description: University closed in observance of Armenian Christmas.
+---
+Title: Advising for new students for spring 2026
+StartDate: 2026-01-07
+EndDate: 2026-01-07
+Location: 
+Description: Academic advising day dedicated to new students joining LAU in spring 2026.
+---
+Title: Deadline for regular application to the PGY1 pharmacy residency program (AY 2026–2027)
+StartDate: 2026-01-07
+EndDate: 2026-01-07
+Location: 
+Description: Final date to submit regular applications to the PGY1 pharmacy residency program for AY 2026–2027.
+---
+Title: Advising and registration for professional-years pharmacy students for spring 2026
+StartDate: 2026-01-08
+EndDate: 2026-01-09
+Location: 
+Description: Advising and course registration period for professional pharmacy students for the spring 2026 term.
+---
+Title: Registration for returnees and freshman students accepted in a program (spring 2026)
+StartDate: 2026-01-08
+EndDate: 2026-01-08
+Location: 
+Description: Registration day for returnees and freshman students who have been accepted into a degree program for spring 2026.
+---
+Title: Registration for new students spring 2026
+StartDate: 2026-01-08
+EndDate: 2026-01-08
+Location: 
+Description: Initial course registration for newly admitted students starting at LAU in spring 2026.
+---
+Title: Late registration with late fees and drop/add (Phase 1)
+StartDate: 2026-01-12
+EndDate: 2026-01-13
+Location: 
+Description: Period for late registration and schedule adjustments; late fees apply.
+---
+Title: Orientation day for new students for spring 2026
+StartDate: 2026-01-13
+EndDate: 2026-01-13
+Location: 
+Description: Official orientation activities for new students joining LAU in the spring 2026 semester.
+---
+Title: Late registration with late fees and drop/add (Phase 2)
+StartDate: 2026-01-14
+EndDate: 2026-01-16
+Location: 
+Description: Continued late registration and course changes with late fees for spring 2026.
+---
+Title: Spring 2026 classes begin
+StartDate: 2026-01-14
+EndDate: 2026-01-14
+Location: 
+Description: First day of classes for the spring 2026 semester.
+---
+Title: Late registration with late fees and drop/add continues (Phase 3)
+StartDate: 2026-01-19
+EndDate: 2026-01-20
+Location: 
+Description: Additional late registration days where override permission may be granted to enroll in closed sections.
+---
+Title: Spring 2026 Term A classes begin for graduate online programs
+StartDate: 2026-01-19
+EndDate: 2026-01-19
+Location: 
+Description: Start of Term A classes in graduate online programs for spring 2026.
+---
+Title: Late registration with late fees continues (final day)
+StartDate: 2026-01-21
+EndDate: 2026-01-21
+Location: 
+Description: Final day for any remaining late registrations with associated fees.
+---
+Title: Collection of statement of fees for spring 2026 starts
+StartDate: 2026-01-23
+EndDate: 2026-01-23
+Location: 
+Description: Issuance and collection of fee statements for the spring 2026 term.
+---
+Title: Deadline for payment of fees for spring 2026
+StartDate: 2026-02-02
+EndDate: 2026-02-02
+Location: 
+Description: Last day to settle tuition and fees for spring 2026 without additional penalties.
+---
+Title: Saint Maroun’s Day
+StartDate: 2026-02-09
+EndDate: 2026-02-09
+Location: 
+Description: University closed in observance of Saint Maroun’s Day.
+---
+Title: Deadline for early withdrawal from courses of spring 2026 (WI)
+StartDate: 2026-02-18
+EndDate: 2026-02-18
+Location: 
+Description: Last date for early withdrawal from spring 2026 courses with a WI notation.
+---
+Title: Spring 2026 Term A classes end for graduate online programs
+StartDate: 2026-03-11
+EndDate: 2026-03-11
+Location: 
+Description: End of Term A teaching period for graduate online courses in spring 2026.
+---
+Title: Deadline for Incomplete grades from fall 2025
+StartDate: 2026-03-11
+EndDate: 2026-03-11
+Location: 
+Description: Final deadline to resolve Incomplete grades assigned in fall 2025 courses.
+---
+Title: Spring 2026 Term B classes begin for graduate online programs
+StartDate: 2026-03-16
+EndDate: 2026-03-16
+Location: 
+Description: Start of Term B classes in graduate online programs for spring 2026.
+---
+Title: Holiday: Al-Fitr
+StartDate: 2026-03-20
+EndDate: 2026-03-21
+Location: 
+Description: University closed for the Al-Fitr holiday.
+---
+Title: The 41th ACM Symposium on Applied Computing (SAC 2026) – Databases and Big Data Management Track
+StartDate: 2026-03-23
+EndDate: 2026-03-27
+Location: Thessaloniki, Greece
+Description: International ACM conference including a track on databases and big data management, co-chaired by LAU faculty.
+---
+Title: Payment of deposit for all continuing students for fall 2026
+StartDate: 2026-03-24
+EndDate: 2026-04-09
+Location: 
+Description: Period during which continuing students must pay the enrollment deposit for fall 2026.
+---
+Title: Holiday: Annunciation Day
+StartDate: 2026-03-25
+EndDate: 2026-03-25
+Location: 
+Description: University closed in observance of Annunciation Day.
+---
+Title: Deadline for withdrawal from courses of spring 2026 (WP/WF)
+StartDate: 2026-03-27
+EndDate: 2026-03-27
+Location: 
+Description: Final date to withdraw from spring 2026 courses with WP or WF notations.
+---
+Title: Deadline for regular application to the medical school for academic year 2026–2027
+StartDate: 2026-03-31
+EndDate: 2026-03-31
+Location: 
+Description: Regular application deadline for entry to the medical school in AY 2026–2027.
+---
+Title: Holiday: Western Easter
+StartDate: 2026-04-03
+EndDate: 2026-04-06
+Location: 
+Description: University closed for the Western Easter holiday period.
+---
+Title: Advising for current students for summer and fall 2026
+StartDate: 2026-04-07
+EndDate: 2026-04-30
+Location: 
+Description: Advising window for currently enrolled students planning summer and fall 2026 registrations.
+---
+Title: Holiday: Eastern Easter
+StartDate: 2026-04-10
+EndDate: 2026-04-13
+Location: 
+Description: University closed for the Eastern Easter holiday period.
+---
+Title: Registration for all continuing students for summer 2026
+StartDate: 2026-04-14
+EndDate: 2026-04-17
+Location: 
+Description: Course registration period for continuing students wishing to enroll in summer 2026.
+---
+Title: Phase 1 registration for fall 2026 for all continuing students
+StartDate: 2026-04-24
+EndDate: 2026-04-30
+Location: 
+Description: First phase of fall 2026 registration for continuing students who plan ahead of the main cycle.
+---
+Title: Spring 2026 classes end
+StartDate: 2026-04-30
+EndDate: 2026-04-30
+Location: 
+Description: Last day of instruction for the spring 2026 semester.
+---
+Title: Reading period (Spring 2026)
+StartDate: 2026-05-01
+EndDate: 2026-05-03
+Location: 
+Description: Study period before the start of spring 2026 final examinations.
+---
+Title: Classes end for medical students year IV (AY 2025–2026)
+StartDate: 2026-05-01
+EndDate: 2026-05-01
+Location: 
+Description: End of classes for fourth-year medical students in academic year 2025–2026.
+---
+Title: Spring 2026 final exams
+StartDate: 2026-05-04
+EndDate: 2026-05-14
+Location: 
+Description: Examination period for spring 2026 courses.
+---
+Title: Spring 2026 Term B classes end for graduate online programs
+StartDate: 2026-05-06
+EndDate: 2026-05-06
+Location: 
+Description: End of Term B teaching period for graduate online courses in spring 2026.
+---
+Title: Classes end for medical students years II and III (AY 2025–2026)
+StartDate: 2026-05-15
+EndDate: 2026-05-15
+Location: 
+Description: Last day of instruction for second- and third-year medical students in AY 2025–2026.
+---
+Title: Classes begin for medical students year IV (AY 2026–2027)
+StartDate: 2026-05-25
+EndDate: 2026-05-25
+Location: 
+Description: Start of fourth-year medical curriculum for academic year 2026–2027.
+---
+Title: Holiday: Al-Adha
+StartDate: 2026-05-27
+EndDate: 2026-05-29
+Location: 
+Description: University closed in observance of the Al-Adha holiday.
+---
+Title: Classes begin for medical students year III (AY 2026–2027)
+StartDate: 2026-06-01
+EndDate: 2026-06-01
+Location: 
+Description: Third-year medical students commence classes for AY 2026–2027.
+---
+Title: Advising and registration for professional-years pharmacy students for summer 2026
+StartDate: 2026-06-02
+EndDate: 2026-06-03
+Location: 
+Description: Summer advising and registration period for professional pharmacy students.
+---
+Title: Registration for returnees and freshman students accepted in a program (summer 2026)
+StartDate: 2026-06-02
+EndDate: 2026-06-02
+Location: 
+Description: Registration day for returnees and accepted freshman students planning to study in summer 2026.
+---
+Title: Advising and registration for new students for summer 2026
+StartDate: 2026-06-03
+EndDate: 2026-06-03
+Location: 
+Description: Advising and initial registration for newly admitted students starting in summer 2026.
+---
+Title: Late registration with late fees and drop/add (Summer 2026 – Phase 1)
+StartDate: 2026-06-04
+EndDate: 2026-06-05
+Location: 
+Description: Period for late registration and drop/add for summer 2026; late fees apply.
+---
+Title: Summer 2026 classes begin
+StartDate: 2026-06-08
+EndDate: 2026-06-08
+Location: 
+Description: First day of instruction for the summer 2026 term.
+---
+Title: Summer 2026 term begins for graduate online programs
+StartDate: 2026-06-08
+EndDate: 2026-06-08
+Location: 
+Description: Start of the summer teaching term for graduate online programs.
+---
+Title: Late registration with late fees and drop/add continues (Summer – Phase 2)
+StartDate: 2026-06-10
+EndDate: 2026-06-10
+Location: 
+Description: Additional day for schedule changes and late registration for summer 2026.
+---
+Title: Late registration with late fees continues (Summer – Final day)
+StartDate: 2026-06-11
+EndDate: 2026-06-11
+Location: 
+Description: Final late registration opportunity for the summer 2026 term.
+---
+Title: Commencement Exercises – Beirut Campus
+StartDate: 2026-06-12
+EndDate: 2026-06-13
+Location: 
+Description: Graduation ceremonies held on the Beirut campus.
+---
+Title: Collection of statement of fees for summer 2026 starts
+StartDate: 2026-06-15
+EndDate: 2026-06-15
+Location: 
+Description: Issuance and collection of fee statements for the summer 2026 term.
+---
+Title: Holiday: Hijra New Year
+StartDate: 2026-06-17
+EndDate: 2026-06-17
+Location: 
+Description: University closed in observance of the Hijra New Year.
+---
+Title: Deadline for payment of fees for summer 2026
+StartDate: 2026-06-22
+EndDate: 2026-06-22
+Location: 
+Description: Last day to pay tuition and fees for the summer 2026 term.
+---
+Title: Ashoura Commemoration Day
+StartDate: 2026-06-26
+EndDate: 2026-06-26
+Location: 
+Description: University closed in observance of Ashoura.
+---
+Title: Deadline for early withdrawal from courses of summer 2026 (WI)
+StartDate: 2026-06-29
+EndDate: 2026-06-29
+Location: 
+Description: Final date for early withdrawal from summer 2026 courses with a WI notation.
+---
+Title: Commencement Exercises – Byblos Campus
+StartDate: 2026-07-09
+EndDate: 2026-07-09
+Location: 
+Description: Graduation ceremonies held on the Byblos campus.
+---
+Title: Deadline for withdrawal from courses of summer 2026 (WP/WF)
+StartDate: 2026-07-09
+EndDate: 2026-07-09
+Location: 
+Description: Deadline to withdraw from summer 2026 classes with WP or WF notations.
+---
+Title: Phase 2 registration for fall 2026 for all continuing students who paid the deposit
+StartDate: 2026-07-13
+EndDate: 2026-07-17
+Location: 
+Description: Second registration phase for fall 2026 for students who have already paid their deposit.
+---
+Title: PharmD hooding ceremony and graduation of residents
+StartDate: 2026-07-15
+EndDate: 2026-07-15
+Location: 
+Description: Ceremony celebrating PharmD graduates and pharmacy residents.
+---
+Title: Classes end for medical students year I (AY 2025–2026)
+StartDate: 2026-07-17
+EndDate: 2026-07-17
+Location: 
+Description: End of classes for first-year medical students in AY 2025–2026.
+---
+Title: Summer 2026 classes end
+StartDate: 2026-07-22
+EndDate: 2026-07-22
+Location: 
+Description: Last day of instruction for the summer 2026 term.
+---
+Title: Reading day (Summer 2026)
+StartDate: 2026-07-23
+EndDate: 2026-07-23
+Location: 
+Description: Study day for students to prepare for summer 2026 final exams.
+---
+Title: Summer 2026 final exams
+StartDate: 2026-07-24
+EndDate: 2026-07-28
+Location: 
+Description: Examination period for summer 2026 courses.
+---
+Title: Summer 2026 term ends for graduate online programs
+StartDate: 2026-07-29
+EndDate: 2026-07-29
+Location: 
+Description: Conclusion of the summer term for graduate online programs.
+---
+Title: Advising and registration for new students for fall 2026
+StartDate: 2026-08-03
+EndDate: 2026-08-21
+Location: 
+Description: Period for advising and registering newly admitted students for fall 2026.
+---
+Title: Holiday: Saint Mary’s Assumption Day
+StartDate: 2026-08-15
+EndDate: 2026-08-15
+Location: 
+Description: University closed in observance of Saint Mary’s Assumption Day.
+---
+Title: Classes begin for medical students years I and II (AY 2026–2027)
+StartDate: 2026-08-24
+EndDate: 2026-08-24
+Location: 
+Description: Start of classes for first- and second-year medical students in AY 2026–2027.
+---
+Title: Holiday: Prophet’s Birthday
+StartDate: 2026-08-25
+EndDate: 2026-08-25
+Location: 
+Description: University closed in observance of the Prophet’s Birthday.
+---
+Title: Fall 2026 classes begin
+StartDate: 2026-08-31
+EndDate: 2026-08-31
+Location: 
+Description: First day of instruction for the fall 2026 semester.
+---
+Title: Academic year 2026–2027 begins
+StartDate: 2026-08-31
+EndDate: 2026-08-31
+Location: 
+Description: Official start date of the LAU academic year 2026–2027.
+---
