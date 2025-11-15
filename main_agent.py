@@ -164,10 +164,10 @@ class AgentInterface:
 
         # -------- 3) Final fallback: direct LLM answer --------
         system_prompt = "You are a helpful assistant specialized in the University domain."
-        messages = [HumanMessage(content=f"{system_prompt}\nUser: {query}")]
+        prompt = f"{system_prompt}\nUser: {query}"
 
         try:
-            resp = self.llm(messages)
+            resp = self.llm.invoke(prompt)
             text = getattr(resp, "content", str(resp))
         except Exception as e:
             text = f"LLM Query Failed: {e}"
