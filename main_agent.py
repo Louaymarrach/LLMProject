@@ -191,7 +191,12 @@ class AgentInterface:
 
     def duck_search_tool(self, query: str) -> List[str]:
         return self.tools.get_tool("duck_search")(query)
-
+    
+    def mood_support_tool(self, text: str) -> str:
+        tool = self.tools.get_tool("mood_support")
+        if tool is None:
+            return "The mood support tool is not available right now."
+        return tool(text)
 
 # ---------------- CLI Debug ----------------
 if __name__ == "__main__":
