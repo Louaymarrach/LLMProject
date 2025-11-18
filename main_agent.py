@@ -49,6 +49,8 @@ except ImportError:
 from langchain_core.messages import HumanMessage
 from langchain_community.vectorstores import FAISS
 from langchain_classic.chains import RetrievalQA
+from langchain_core.prompts import PromptTemplate
+
 
 # ---------------- Agent Interface ----------------
 class AgentInterface:
@@ -79,40 +81,105 @@ class AgentInterface:
 
     # ---------------- Query Handler ----------------
     def run_query(self, query: str) -> Tuple[str, Dict[str, Any]]:
-        """Run a query through RAG if available, otherwise use direct LLM."""
+        """
+        Strategy:
+
+        1) Try RAG over the LAU documents (if retriever is available).
+           - If context really answers the question, return RAG answer.
+           - If docs are not relevant or don't contain the answer, continue.
+        2) If RAG can't help:
+           - Try DuckDuckGo web search as a backup.
+        3) If DuckDuckGo is also not useful:
+           - Fall back to a plain LLM answer.
+
+        All of this happens behind a single chat input field.
+        """
         metadata: Dict[str, Any] = {}
 
-        # Use Retrieval-Augmented Generation if retriever exists
+        # -------- 1) Try RAG first --------
         if self.retriever:
             try:
-                qa = RetrievalQA.from_chain_type(
-                    llm=self.llm,
-                    chain_type="stuff",
-                    retriever=self.retriever
-                )
-                answer = qa.run(query)
-                metadata["method"] = "RAG"
-                return answer, metadata
+                # Get potentially relevant docs (LangChain retrievers use .invoke)
+                docs = self.retriever.invoke(query)
+
+                if docs and len(docs) > 0:
+                    # Custom prompt: if context is not useful, answer with NO_CONTEXT
+                    rag_prompt = PromptTemplate(
+                        input_variables=["context", "question"],
+                        template=(
+                            "You are an assistant that answers questions ONLY using the context below "
+                            "about the Lebanese American University (LAU).\n"
+                            "If the context is not relevant to the question, or does not contain the answer, "
+                            "respond with exactly the single word: NO_CONTEXT.\n\n"
+                            "Context:\n{context}\n\n"
+                            "Question:\n{question}\n\n"
+                            "Answer:"
+                        ),
+                    )
+
+                    qa = RetrievalQA.from_chain_type(
+                        llm=self.llm,
+                        chain_type="stuff",
+                        retriever=self.retriever,
+                        chain_type_kwargs={"prompt": rag_prompt},
+                    )
+
+                    answer = qa.run(query).strip()
+
+                    if answer == "NO_CONTEXT":
+                        # Docs exist but don't answer the question → let other tools handle it
+                        metadata["rag_info"] = "no_answer_in_docs"
+                    else:
+                        metadata["method"] = "RAG"
+                        metadata["num_docs"] = len(docs)
+                        return answer, metadata
+                else:
+                    # Retriever found nothing relevant
+                    metadata["rag_info"] = "no_relevant_docs"
+
             except Exception as e:
                 metadata["rag_error"] = str(e)
 
-        # Fallback: direct LLM query
+        # -------- 2) Try DuckDuckGo web search --------
+        duck_answer = None
+        try:
+            duck_results = self.duck_search_tool(query)  # list of snippets
+            if duck_results and isinstance(duck_results, list):
+                cleaned = [s for s in duck_results if s and s.strip()]
+                # Ignore the generic "No results found." only result
+                if cleaned and not (len(cleaned) == 1 and "No results found" in cleaned[0]):
+                    top_snippets = cleaned[:3]
+                    duck_answer = (
+                        "I couldn’t find a good answer in the university documents, "
+                        "so I searched the web and here is a summary of what I found:\n\n"
+                        + "\n\n".join(f"- {snippet}" for snippet in top_snippets)
+                    )
+                    metadata["method"] = "duck_search"
+                    metadata["web_results"] = top_snippets
+        except Exception as e:
+            metadata["duck_error"] = str(e)
+
+        if duck_answer:
+            return duck_answer, metadata
+
+        # -------- 3) Final fallback: direct LLM answer --------
         system_prompt = "You are a helpful assistant specialized in the University domain."
-        messages = [HumanMessage(content=f"{system_prompt}\nUser: {query}")]
+        prompt = f"{system_prompt}\nUser: {query}"
 
         try:
-            resp = self.llm(messages)
+            resp = self.llm.invoke(prompt)
             text = getattr(resp, "content", str(resp))
         except Exception as e:
             text = f"LLM Query Failed: {e}"
             metadata["llm_error"] = str(e)
 
-        # Save to memory
+        # Save conversation to memory (best effort)
         try:
             self.memory.save_context({"input": query}, {"output": text})
         except Exception:
             pass
 
+        metadata.setdefault("method", "direct_llm")
         return text, metadata
 
     # ---------------- Tool Access ----------------
