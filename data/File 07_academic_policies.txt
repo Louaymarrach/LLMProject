@@ -1,11 +1,15 @@
 Title: Academic Rules, Standing, and Integrity
 
 Grading System (4.0 scale):
-A = 4.0 (Excellent)  
-B+ = 3.3  
+A = 4.0 (Excellent)
+A- = 3.67  
+B+ = 3.33  
 B = 3.0 (Good)  
-C+ = 2.3  
+B- = 2.67
+C+ = 2.33  
 C = 2.0 (Satisfactory)  
+C- = 1.67
+D+ = 1.33
 D = 1.0 (Pass)  
 F = 0.0 (Fail)
 
