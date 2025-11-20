@@ -150,7 +150,7 @@ class AgentInterface:
                 if cleaned and not (len(cleaned) == 1 and "No results found" in cleaned[0]):
                     top_snippets = cleaned[:3]
                     duck_answer = (
-                        "I couldn’t find a good answer in the university documents, "
+                        "I couldn't find a good answer in the university documents, "
                         "so I searched the web and here is a summary of what I found:\n\n"
                         + "\n\n".join(f"- {snippet}" for snippet in top_snippets)
                     )
