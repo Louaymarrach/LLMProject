@@ -192,11 +192,25 @@ class AgentInterface:
     def duck_search_tool(self, query: str) -> List[str]:
         return self.tools.get_tool("duck_search")(query)
     
-    def mood_support_tool(self, text: str) -> str:
+    def mood_support_tool(self, text: str) -> Tuple[str, Dict[str, Any]]:
+        """Call the custom mood_support tool and return text + metadata."""
+        metadata: Dict[str, Any] = {"method": "mood_support"}
+
         tool = self.tools.get_tool("mood_support")
         if tool is None:
-            return "The mood support tool is not available right now."
-        return tool(text)
+            msg = "The mood support tool is not available right now."
+            metadata["error"] = "tool_not_available"
+            return msg, metadata
+
+        try:
+            support_text = tool(text)  # LLM-based / rule-based tool in tools.py
+        except Exception as e:
+            support_text = (
+                "The mood support tool ran into a problem while generating a reply."
+            )
+            metadata["error"] = str(e)
+
+        return support_text, metadata
 
 # ---------------- CLI Debug ----------------
 if __name__ == "__main__":

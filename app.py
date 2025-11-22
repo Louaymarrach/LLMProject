@@ -41,12 +41,16 @@ st.header("Mental Health Support (Non-clinical)")
 
 with st.form("mood_support_form"):
     user_feelings = st.text_area(
-        "Describe how you're feeling (entirely optional — this tool offers gentle, non-clinical emotional support):",
+        "Describe how you're feeling:",
         height=120
     )
     mood_submitted = st.form_submit_button("Get supportive message")
 
 if mood_submitted and user_feelings.strip():
-    support = agent.mood_support_tool(user_feelings)
+    support, mood_meta = agent.mood_support_tool(user_feelings)
     st.subheader("Supportive Message")
     st.write(support)
+
+    if mood_meta:
+        st.markdown("**Support context / tools**")
+        st.json(mood_meta)
