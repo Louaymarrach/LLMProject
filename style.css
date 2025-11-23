@@ -1,53 +1,135 @@
-/* app background & font */
+/* --------------------------------------------------
+   GLOBAL PAGE STYLE
+-------------------------------------------------- */
 .stApp {
-    background-color: #f2f4f7;
-    font-family: "Segoe UI", sans-serif;
+    background-color: #f3f6fb;
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #2c3e50;
+    padding: 0 20px;
 }
 
-/* Titles */
+/* Page titles */
 h1, h2, h3 {
-    color: #305f7f;
+    color: #234b6c !important;
+    font-weight: 600;
+    text-align: center;
 }
 
-/* Sidebar */
+
+/* --------------------------------------------------
+   SIDEBAR STYLE
+-------------------------------------------------- */
 section[data-testid="stSidebar"] {
     background-color: #ffffff;
-    border-right: 1px solid #d0d4dd;
+    border-right: 1px solid #d6dce5;
+    padding-top: 20px;
 }
 
-/* Buttons */
-.stButton > button {
-    background-color: #2c6e91;
-    color: #ffffff;
-    border-radius: 4px;
-    border: none;
-    padding: 8px 16px;
-    font-weight: 500;
-}
-.stButton > button:hover {
-    background-color: #234f6a;
+section[data-testid="stSidebar"] h1,
+section[data-testid="stSidebar"] h2,
+section[data-testid="stSidebar"] h3 {
+    color: #1a334b !important;
 }
 
-/* Text areas */
-textarea {
-    border-radius: 4px !important;
-    border: 1px solid #c3c8d4 !important;
+
+/* --------------------------------------------------
+   BUTTONS
+-------------------------------------------------- */
+.stButton > button,
+.stForm button {
+    background-color: #2d82b7 !important;
+    color: white !important;
+    border-radius: 8px !important;
+    border: none !important;
+    padding: 12px 22px !important;
+    font-weight: 600 !important;
+    font-size: 15px !important;
+    transition: 0.15s ease-in-out;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.07);
 }
 
-/* Card-like boxes for each main section */
+.stButton > button:hover,
+.stForm button:hover {
+    background-color: #1f618c !important;
+    transform: translateY(-2px);
+}
+
+
+/* --------------------------------------------------
+   INPUT FIELDS
+-------------------------------------------------- */
+textarea, input, select {
+    border-radius: 8px !important;
+    border: 1px solid #c2cad8 !important;
+    background-color: #ffffff !important;
+    padding: 10px;
+}
+
+textarea:focus, input:focus, select:focus {
+    border-color: #2d82b7 !important;
+    box-shadow: 0 0 5px rgba(45,130,183,0.3);
+}
+
+
+/* --------------------------------------------------
+   SECTION CARDS (Main UI Boxes)
+-------------------------------------------------- */
 .section-card {
     background-color: #ffffff;
-    border-radius: 4px;
-    padding: 18px 20px;
-    margin-bottom: 16px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    border-radius: 14px;
+    padding: 26px 30px;
+    margin: 25px auto;
+    width: 90%;
+    max-width: 950px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
-/* Slight color variations */
 .section-card.blue {
-    background-color: #d7e8f5;
+    background-color: #e7f1fb;
 }
 
 .section-card.green {
-    background-color: #dceec4;
+    background-color: #eaf7e9;
+}
+
+
+/* --------------------------------------------------
+   CHAT RESPONSE BOX
+-------------------------------------------------- */
+.response-box {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 15px;
+    border-left: 6px solid #2d82b7;
+    box-shadow: 0 2px 7px rgba(0,0,0,0.06);
+}
+
+
+/* --------------------------------------------------
+   JSON VIEWER / METADATA
+-------------------------------------------------- */
+[data-testid="json-container"] {
+    background-color: #ffffff !important;
+    padding: 10px;
+    border-radius: 10px !important;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+
+/* --------------------------------------------------
+   SCROLLBARS
+-------------------------------------------------- */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #e6e9ef;
+}
+::-webkit-scrollbar-thumb {
+    background: #b0b7c3;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #8a93a2;
 }

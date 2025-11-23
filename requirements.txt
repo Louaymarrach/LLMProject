@@ -24,3 +24,27 @@ streamlit>=1.51.0
 
 # OpenAI (if you also want to use OpenAI models)
 openai>=2.7.2
+streamlit==1.51.0
+python-dotenv==1.0.1
+requests==2.32.3
+
+# PDF processing
+PyPDF2==3.0.1
+
+# Vectorstore (FAISS)
+faiss-cpu==1.13.0
+
+# LangChain core framework
+langchain==1.0.8
+langchain-community==0.2.7
+langchain-core==0.2.16
+langchain-text-splitters==0.2.2
+langchain-classic==0.0.10
+
+# Google Generative AI (Gemini)
+google-generativeai==0.7.0
+langchain-google-genai==1.0.5
+
+# Optional but recommended for stability
+typing-extensions>=4.10.0
+tqdm>=4.66.0
