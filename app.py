@@ -9,6 +9,7 @@ This app expects:
 """
 
 import os
+import html  # For escaping user input
 import streamlit as st
 from dotenv import load_dotenv
 from main_agent import AgentInterface
@@ -52,24 +53,58 @@ os.makedirs("uploads", exist_ok=True)
 with st.spinner("Initializing agent..."):
     agent = AgentInterface()
 
-# ----------------- Left: Chat -----------------
+# ----------------- Layout -----------------
 col1, col2 = st.columns([2, 1])
 
+# ----------------- Left: Chat -----------------
 with col1:
     st.markdown('<div class="section-card blue">', unsafe_allow_html=True)
     st.header("Chat")
-    # Chat form
-    with st.form("chat_form"):
-        user_input = st.text_area("Enter your question", height=140)
-        submitted = st.form_submit_button("Send")
-    if submitted and user_input.strip():
-        with st.spinner("Thinking..."):
-            response, metadata = agent.run_query(user_input)
-        st.subheader("Response")
-        st.write(response)
-        if metadata:
-            st.markdown("**Metadata / Retrieval Info**")
-            st.json(metadata)
+
+    # Initialize chat history if not present
+    if "chat_history" not in st.session_state:
+        st.session_state.chat_history = []
+
+    # Function to send a message
+    def send_message():
+        user_input = st.session_state.input_text
+        if not user_input.strip():
+            return
+        response, _ = agent.run_query(user_input)  # metadata ignored here
+        st.session_state.chat_history.append({"role": "user", "message": user_input})
+        st.session_state.chat_history.append({"role": "agent", "message": response})
+        st.session_state.input_text = ""  # clear input after sending
+
+    # Display chat history
+    for chat in st.session_state.chat_history:
+        msg_safe = html.escape(chat["message"])
+        if chat["role"] == "user":
+            st.markdown(
+                f"""
+                <div style='text-align:right; margin-bottom:8px;'>
+                    <div style='display:inline-block; background:#DCF8C6; padding:10px 14px; border-radius:12px; max-width:80%; word-wrap: break-word;'>
+                        {msg_safe}
+                    </div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+        else:
+            st.markdown(
+                f"""
+                <div style='text-align:left; margin-bottom:8px;'>
+                    <div style='display:inline-block; background:#F1F0F0; padding:10px 14px; border-radius:12px; max-width:80%; word-wrap: break-word;'>
+                        {msg_safe}
+                    </div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+
+    # Chat input area below chat history
+    st.text_area("Enter your question", key="input_text", height=140)
+    st.button("Send", on_click=send_message)
+
     st.markdown("</div>", unsafe_allow_html=True)
 
     # RAG QA specific interface
