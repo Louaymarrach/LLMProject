@@ -1,17 +1,26 @@
 Title: Academic Rules, Standing, and Integrity
 
-Grading System (4.0 scale):
-A = 4.0 (Excellent)
-A- = 3.67  
-B+ = 3.33  
-B = 3.0 (Good)  
-B- = 2.67
-C+ = 2.33  
-C = 2.0 (Satisfactory)  
-C- = 1.67
-D+ = 1.33
-D = 1.0 (Pass)  
-F = 0.0 (Fail)
+The Lebanese American University (LAU) uses a 4.0 quality point scale.
+
+Letter Grade – Grade Range – Quality Points
+A: 90 and above – 4.00  
+A-: 87–89 – 3.67  
+B+: 83–86 – 3.33  
+B: 80–82 – 3.00  
+B-: 77–79 – 2.67  
+C+: 73–76 – 2.33  
+C: 70–72 – 2.00  
+C-: 67–69 – 1.67  
+D+: 63–66 – 1.33  
+D: 60–62 – 1.00  
+F: 59 and below – 0.00
+
+Description:
+- A = Excellent  
+- B = Good  
+- C = Satisfactory  
+- D = Pass  
+- F = Fail
 
 Academic Standing:
 - Minimum cumulative GPA: 2.0 for good standing.

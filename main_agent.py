@@ -112,31 +112,34 @@ class AgentInterface:
 
     # ---------------- Core query flow ----------------
     def run_query(self, query: str) -> Tuple[str, Dict[str, Any]]:
+        """
+        Strategy:
+
+        1) Try RAG over the LAU documents (if retriever is available).
+           - If context really answers the question, return the RAG answer.
+           - If docs are not relevant or don't contain the answer, continue.
+        2) If RAG can't help:
+           - Try DuckDuckGo web search as a backup.
+        3) If DuckDuckGo is also not useful:
+           - Fall back to a plain LLM answer.
+        """
         metadata: Dict[str, Any] = {}
-        query = (query or "").strip()
-        if not query:
-            return "Please enter a non-empty question.", {"error": "empty_query"}
 
-        # ----------------------- 1) ATTEMPT RAG -----------------------
-        if self.retriever and RetrievalQA is not None and PromptTemplate is not None:
+        # -------- 1) Try RAG first --------
+        if self.retriever:
             try:
-                # Check if RAG has any relevant documents BEFORE running QA
-                try:
-                    docs = self.retriever.get_relevant_documents(query)
-                except:
-                    docs = []
+                from langchain_core.prompts import PromptTemplate
 
-                if not docs:
-                    metadata["rag_info"] = "no_docs_retrieved"
-                    raise Exception("Skipping RAG because no relevant documents were found")
-
-                # Build prompt template
                 rag_prompt = PromptTemplate(
                     input_variables=["context", "question"],
                     template=(
-                        "You are an assistant that answers ONLY using the context.\n"
-                        "If answer is not found in context, reply with NO_CONTEXT.\n\n"
-                        "Context:\n{context}\n\nQuestion:\n{question}\n\nAnswer:"
+                        "You are an assistant that answers questions ONLY using the context below "
+                        "about the Lebanese American University (LAU).\n"
+                        "If the context is not relevant to the question, or does not contain the answer, "
+                        "respond with exactly the single word: NO_CONTEXT.\n\n"
+                        "Context:\n{context}\n\n"
+                        "Question:\n{question}\n\n"
+                        "Answer:"
                     ),
                 )
 
@@ -147,72 +150,82 @@ class AgentInterface:
                     chain_type_kwargs={"prompt": rag_prompt},
                 )
 
-                rag_answer = qa.run(query).strip()
+                # Let RetrievalQA handle retrieval internally
+                answer = qa.run(query).strip()
 
-                # If RAG produced a valid contextual answer → return
-                if rag_answer and rag_answer != "NO_CONTEXT":
+                # Normalize to catch "NO_CONTEXT."...
+                normalized = answer.strip().strip(".!?:").upper()
+
+                if normalized == "NO_CONTEXT":
+                    # RAG couldn’t answer, continue to DuckDuckGo then LLM
+                    metadata["rag_info"] = "no_answer_in_docs"
+                else:
+                    # RAG found an actual answer
                     metadata["method"] = "RAG"
-                    metadata["num_docs"] = len(docs)
-                    self.memory.save_context({"input": query}, {"output": rag_answer})
-                    return rag_answer, metadata
-
-                # Otherwise allow fall-through to Duck tool
-                metadata["rag_info"] = "no_answer_in_docs"
-
+                    return answer, metadata
             except Exception as e:
                 metadata["rag_error"] = str(e)
 
-        # ------------------------ 2) DUCK SEARCH ------------------------
-        duck_tool = self._get_tool_flexible("duck", "duck_search")
-        if duck_tool:
-            try:
-                duck_out = duck_tool(query)
-
-                # Convert duck output to readable text
-                duck_snippets = []
-                if isinstance(duck_out, dict):
-                    abstract = duck_out.get("abstract", "") or duck_out.get("AbstractText", "")
-                    if abstract:
-                        duck_snippets.append(abstract)
-                    for rt in duck_out.get("related_topics", [])[:3]:
-                        t = rt.get("text", "") if isinstance(rt, dict) else str(rt)
-                        if t:
-                            duck_snippets.append(t)
-
-                elif isinstance(duck_out, list):
-                    duck_snippets = duck_out[:3]
-
-                elif isinstance(duck_out, str):
-                    duck_snippets = [duck_out]
-
-                duck_snippets = [s for s in duck_snippets if s.strip()]
-                if duck_snippets:
-                    metadata["method"] = "duck_search"
-                    metadata["web_results"] = duck_snippets
-                    answer = (
-                        "No answer found in course materials, but here is what I found on the web:\n\n"
-                        + "\n\n".join(f"- {s}" for s in duck_snippets)
-                    )
-                    self.memory.save_context({"input": query}, {"output": answer})
-                    return answer, metadata
-
-            except Exception as e:
-                metadata["duck_error"] = str(e)
-
-        # ------------------------ 3) DIRECT LLM ------------------------
+        # -------- 2) Try DuckDuckGo web search --------
+        duck_answer = None
         try:
-            prompt = f"You are a helpful assistant.\nUser: {query}"
+            duck_raw = self.duck_search_tool(query)   # dict from tools.duck_search
+            metadata["duck_raw"] = duck_raw        
+
+            if isinstance(duck_raw, dict) and not duck_raw.get("error"):
+                snippets = []
+
+                # main abstract
+                if duck_raw.get("abstract"):
+                    snippets.append(duck_raw["abstract"])
+
+                # a few related topics
+                for rt in duck_raw.get("related_topics", [])[:3]:
+                    if isinstance(rt, dict):
+                        txt = rt.get("text") or ""
+                        if txt:
+                            snippets.append(txt)
+
+                cleaned = [s.strip() for s in snippets if isinstance(s, str) and s.strip()]
+
+                if cleaned:
+                    duck_answer = (
+                        "No answer found in the documents, but here is what I found on the web:\n\n"
+                        + "\n\n".join(f"- {snippet}" for snippet in cleaned)
+                    )
+                    metadata["method"] = "duck_search"
+                    metadata["web_results"] = cleaned
+                else:
+                    metadata["duck_info"] = "no_useful_snippets"
+            else:
+                metadata["duck_info"] = duck_raw.get("error", "empty_or_invalid_result")
+        except Exception as e:
+            metadata["duck_error"] = str(e)
+
+        # If DuckDuckGo produced something useful, return it
+        if duck_answer:
+            return duck_answer, metadata
+
+        # -------- 3) Final fallback: direct LLM answer --------
+        system_prompt = "You are a helpful assistant specialized in the University domain."
+        prompt = f"{system_prompt}\nUser: {query}"
+
+        try:
+            # ChatGoogleGenerativeAI uses .invoke(...)
             resp = self.llm.invoke(prompt)
             text = getattr(resp, "content", str(resp))
         except Exception as e:
-            text = f"LLM error: {e}"
+            text = f"LLM Query Failed: {e}"
             metadata["llm_error"] = str(e)
 
-        metadata["method"] = "direct_llm"
-        self.memory.save_context({"input": query}, {"output": text})
+        # Save to memory (best-effort)
+        try:
+            self.memory.save_context({"input": query}, {"output": text})
+        except Exception:
+            pass
+
+        metadata.setdefault("method", "direct_llm")
         return text, metadata
-
-
 
     # ---------------- Helper / tool wrappers ----------------
     def _get_tool_flexible(self, *names) -> Optional[Any]:

@@ -22,22 +22,20 @@ except Exception as e:
         "Install required packages"
     ) from e
 
-
-
-def ingest(docs_folder: str, output_dir: str = './vectorstore'):
-    """Load, split, embed, and store documents for retrieval."""
+def ingest(folders, output_dir: str = './vectorstore'):
     docs = []
-    for root, _, files in os.walk(docs_folder):
-        for fname in files:
-            path = os.path.join(root, fname)
-            if fname.lower().endswith('.txt'):
-                loader = TextLoader(path, encoding='utf-8')
-            elif fname.lower().endswith('.pdf'):
-                loader = PyPDFLoader(path)
-            else:
-                print(f"Skipping unsupported file: {path}")
-                continue
-            docs.extend(loader.load())
+    for docs_folder in folders:
+        for root, _, files in os.walk(docs_folder):
+            for fname in files:
+                path = os.path.join(root, fname)
+                if fname.lower().endswith('.txt'):
+                    loader = TextLoader(path, encoding='utf-8')
+                elif fname.lower().endswith('.pdf'):
+                    loader = PyPDFLoader(path)
+                else:
+                    print(f"Skipping unsupported file: {path}")
+                    continue
+                docs.extend(loader.load())
 
     if not docs:
         print("No documents found to ingest.")
@@ -59,7 +57,7 @@ def ingest(docs_folder: str, output_dir: str = './vectorstore'):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--docs_folder', type=str, default='./data')
+    parser.add_argument('--folders', nargs='+', default=['./data', './uploads'])
     parser.add_argument('--output_dir', type=str, default='./vectorstore')
     args = parser.parse_args()
-    ingest(args.docs_folder, args.output_dir)
+    ingest(args.folders, args.output_dir)

@@ -49,7 +49,7 @@ st.sidebar.markdown("**API usage**: Ensure your API keys (e.g. Google) are set i
 # Ensure uploads dir exists
 os.makedirs("uploads", exist_ok=True)
 
-# Instantiate agent (this may take a moment depending on your LLM initialization)
+# Instantiate agent
 with st.spinner("Initializing agent..."):
     agent = AgentInterface()
 
@@ -70,9 +70,9 @@ with col1:
         user_input = st.session_state.input_text
         if not user_input.strip():
             return
-        response, _ = agent.run_query(user_input)  # metadata ignored here
+        response, meta = agent.run_query(user_input)
         st.session_state.chat_history.append({"role": "user", "message": user_input})
-        st.session_state.chat_history.append({"role": "agent", "message": response})
+        st.session_state.chat_history.append({"role": "agent", "message": response, "meta": meta})
         st.session_state.input_text = ""  # clear input after sending
 
     # Display chat history
@@ -90,6 +90,7 @@ with col1:
                 unsafe_allow_html=True,
             )
         else:
+            # Agent message bubble
             st.markdown(
                 f"""
                 <div style='text-align:left; margin-bottom:8px;'>
@@ -101,30 +102,46 @@ with col1:
                 unsafe_allow_html=True,
             )
 
+            # === show method + debug JSON ===
+            meta = chat.get("meta") or {}
+            method = meta.get("method")
+
+            # Small label: where the answer came from
+            if method:
+                if method == "RAG":
+                    source_label = "Answer source: Ingested documents (RAG)"
+                elif method == "duck_search":
+                    source_label = "Answer source: Web search (DuckDuckGo)"
+                elif method == "direct_llm":
+                    source_label = "Answer source: General model knowledge"
+                else:
+                    source_label = f"Answer source: {method}"
+
+                st.markdown(
+                    f"<div style='text-align:left; margin: -6px 0 4px 8px; "
+                    f"font-size: 0.8rem; color: #6b7280;'>{source_label}</div>",
+                    unsafe_allow_html=True,
+                )
+
+            # show raw JSON debug
+            if meta:
+                debug_meta = dict(meta) 
+
+                # If we have a duck_raw dict, remove its "raw" field before displaying
+                duck_raw = debug_meta.get("duck_raw")
+                if isinstance(duck_raw, dict):
+                    slim_duck = dict(duck_raw)  
+                    slim_duck.pop("raw", None)   # drop the giant nested raw field
+                    debug_meta["duck_raw"] = slim_duck
+
+                st.markdown("**Retrieval context / tools**")
+                st.json(debug_meta)
+
+
     # Chat input area below chat history
     st.text_area("Enter your question", key="input_text", height=140)
     st.button("Send", on_click=send_message)
 
-    st.markdown("</div>", unsafe_allow_html=True)
-
-    # RAG QA specific interface
-    st.markdown('<div class="section-card">', unsafe_allow_html=True)
-    st.header("Ask documents (RAG) — uses ingested docs")
-    rag_q = st.text_input("Question for documents (RAG):")
-    rag_k = st.slider("Number of context chunks to retrieve (k)", 1, 6, 3)
-    if st.button("Ask documents"):
-        if not os.path.exists("vectorstore") and agent.retriever is None:
-            st.warning("No vectorstore loaded — ingest documents first in the sidebar.")
-        else:
-            with st.spinner("Retrieving and answering..."):
-                out = agent.pdf_qa_tool(rag_q, k=rag_k)
-            if out.get("status") == "ok":
-                st.subheader("Answer")
-                st.write(out.get("answer"))
-                st.markdown("**Top sources**")
-                st.json(out.get("sources", []))
-            else:
-                st.error(out.get("error", "Unknown error from pdf_qa"))
     st.markdown("</div>", unsafe_allow_html=True)
 
 # ----------------- Right: Tools & Uploads -----------------
