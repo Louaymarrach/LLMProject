@@ -1,8 +1,5 @@
 """
 main_agent.py - LLM Agent Interface using Gemini with RAG and Tools
-
-Replace your existing main_agent.py with this file. It expects a local tools.py
-module that exposes a Toolset class (registered tools).
 """
 
 import os
@@ -12,22 +9,17 @@ from dotenv import load_dotenv
 load_dotenv()
 VECTORSTORE_DIR = os.getenv("VECTORSTORE_DIR", "./vectorstore")
 
-# Local Toolset (expects tools.py in same folder)
-from tools import Toolset
 
-# LLM / embeddings imports (keep consistent with your environment)
-from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
+from tools import Toolset # Local Toolset
+from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings # LLM / embeddings imports
 
-# ConversationBufferMemory fallback shim (keeps compatibility)
+# ConversationBufferMemory fallback shim
 try:
     from langchain_core.memory import ConversationBufferMemory
-    # print(" Imported ConversationBufferMemory from langchain_core")
 except Exception:
     try:
         from langchain.memory import ConversationBufferMemory
-        # print(" Imported ConversationBufferMemory from langchain")
     except Exception:
-        # print(" Using local shim for ConversationBufferMemory")
         class ConversationBufferMemory:
             def __init__(self, memory_key="chat_history", return_messages=True):
                 self.memory_key = memory_key
@@ -53,7 +45,7 @@ except Exception:
                 self._buffer = []
 
 
-# LangChain retrieval/QA pieces (optional; used if available)
+# LangChain retrieval/QA pieces
 try:
     from langchain_community.vectorstores import FAISS
 except Exception:
@@ -79,11 +71,11 @@ class AgentInterface:
      - ingest_tool(file_paths): wrapper to tools.ingest (and reloads retriever)
      - summarize_tool(file_path): wrapper to tools.summarize
      - pdf_qa_tool(question): wrapper to tools.pdf_qa (works directly with vectorstore)
-     - other small wrappers for existing tools (duck, keywords, calculator, mood_support)
+     - other small wrappers for existing tools (duck, keywords, mood_support)
     """
 
     def __init__(self, model_name: Optional[str] = None):
-        # LLM init (Gemini variant used in your project)
+        # LLM init
         self.llm = ChatGoogleGenerativeAI(model=(model_name or "gemini-2.5-flash"), temperature=0.1)
 
         # Memory
@@ -153,7 +145,7 @@ class AgentInterface:
                 # Let RetrievalQA handle retrieval internally
                 answer = qa.run(query).strip()
 
-                # Normalize to catch "NO_CONTEXT."...
+                # Normalize to catch NO_CONTEXT
                 normalized = answer.strip().strip(".!?:").upper()
 
                 if normalized == "NO_CONTEXT":
@@ -211,14 +203,13 @@ class AgentInterface:
         prompt = f"{system_prompt}\nUser: {query}"
 
         try:
-            # ChatGoogleGenerativeAI uses .invoke(...)
             resp = self.llm.invoke(prompt)
             text = getattr(resp, "content", str(resp))
         except Exception as e:
             text = f"LLM Query Failed: {e}"
             metadata["llm_error"] = str(e)
 
-        # Save to memory (best-effort)
+        # Save to memory
         try:
             self.memory.save_context({"input": query}, {"output": text})
         except Exception:
@@ -247,15 +238,6 @@ class AgentInterface:
             return fn(text)
         except Exception:
             return []
-
-    def calculator_tool(self, expr: str) -> str:
-        fn = self._get_tool_flexible("calculator")
-        if not fn:
-            return "Calculator tool not available."
-        try:
-            return fn(expr)
-        except Exception as e:
-            return f"Calculator error: {e}"
 
     def duck_search_tool(self, query: str) -> Any:
         fn = self._get_tool_flexible("duck_search", "duck")

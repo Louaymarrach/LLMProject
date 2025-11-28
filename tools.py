@@ -7,13 +7,9 @@ Provides tools for:
  - summarize_document(file_path): short summary via the LLM
  - pdf_qa(question): RAG-style QA using stored vectorstore
  - mood_support(text): lightweight, safe non-clinical emotional support helper
-
-Replace or append this file into your project. Adjust environment variables as needed.
 """
 
 import os
-import json
-import time
 from typing import List, Dict, Any, Optional, Tuple
 from pathlib import Path
 
@@ -30,7 +26,7 @@ except Exception:
 try:
     from langchain_text_splitters import RecursiveCharacterTextSplitter
 except Exception:
-    # Older/newer langchain variants might differ - raise meaningful error later if missing
+    # raise error later if missing
     RecursiveCharacterTextSplitter = None
 
 # Vectorstore and Embeddings (try several import paths as different projects use different names)
@@ -44,15 +40,15 @@ except Exception:
         from langchain_community.vectorstores import FAISS as FAISS2
         FAISS = FAISS2
     except Exception:
-        FAISS = None  # we'll check later and raise clearer error
+        FAISS = None  # check later and raise clearer error
 
-# Embeddings & chat (project previously used Google Generative AI wrappers)
+# Embeddings & chat
 GoogleGenerativeAIEmbeddings = None
 ChatGoogleGenerativeAI = None
 try:
     from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
 except Exception:
-    # if not available, leave None; we'll handle later
+    # if not available, leave None
     GoogleGenerativeAIEmbeddings = None
     ChatGoogleGenerativeAI = None
 
@@ -130,7 +126,6 @@ def duck_search(query: str, params: Optional[Dict[str, Any]] = None) -> Dict[str
         # related topics
         rtopics = data.get("RelatedTopics", [])
         for rt in rtopics[:8]:
-            # RelatedTopics sometimes is nested
             if isinstance(rt, dict):
                 if rt.get("Text"):
                     result["related_topics"].append({"text": rt.get("Text"), "url": rt.get("FirstURL")})
@@ -171,7 +166,7 @@ def _extract_text_from_file(path: str) -> str:
             return p.read_text(encoding="latin-1")
 
 # -----------------------
-# Embedding / LLM factories (lazy create)
+# Embedding / LLM factories
 # -----------------------
 def _get_embeddings():
     if GoogleGenerativeAIEmbeddings is not None:
@@ -253,9 +248,8 @@ def ingest_documents(file_paths: List[str]) -> Dict[str, Any]:
             try:
                 vs.add_texts(texts, metadatas=metadatas)
             except Exception:
-                # fallback: create a fresh store from new texts and save separately (simple approach)
                 new_vs = FAISS.from_texts(texts, embeddings, metadatas=metadatas)
-                # Merge strategy is implementation dependent; for simplicity replace old with new (overwrite)
+                # Overwrite
                 vs = new_vs
 
         vs.save_local(VECTORSTORE_DIR)
@@ -318,10 +312,10 @@ def summarize_document(file_path: str, max_chars: int = 1200) -> Dict[str, Any]:
                 resp = llm.invoke(prompt)
                 summary_text = getattr(resp, "content", None) or str(resp)
         elif hasattr(llm, "generate"):
-            # langchain chat models: use .generate or .__call__
+            # langchain chat models
             try:
                 out = llm.generate([{"role": "user", "content": prompt}])
-                # structure varies; try to parse
+                # try to parse
                 if hasattr(out, "generations"):
                     gens = out.generations[0][0]
                     summary_text = getattr(gens, "text", None) or str(gens)
@@ -450,8 +444,7 @@ def mood_support(text: str) -> Tuple[str, Dict[str, Any]]:
     txt = text.strip()
     lower = txt.lower()
 
-    # ---- Crisis / self-harm detection (simple heuristics) ----
-    # This is a heuristic detector — not a replacement for clinical tools.
+    # ---- Crisis / self-harm detection ----
     crisis_indicators = [
         "kill myself", "i want to die", "i want to end my life", "suicide",
         "i'm going to kill myself", "i will kill myself", "end my life", "i can't go on",
@@ -480,7 +473,7 @@ def mood_support(text: str) -> Tuple[str, Dict[str, Any]]:
     negative_words = {"sad", "depressed", "anxious", "anxiety", "stressed", "stress", "tired", "terrible", "bad", "upset", "angry", "alone", "lonely", "overwhelmed", "hopeless"}
     worried_words = {"worried", "concerned", "scared", "afraid", "nervous", "panic", "panicking"}
 
-    # tokenization (simple)
+    # tokenization 
     words = set([w.strip(".,!?;:()\"'").lower() for w in lower.split() if w.strip()])
 
     pos_hits = len(words & positive_words)
@@ -528,7 +521,7 @@ def mood_support(text: str) -> Tuple[str, Dict[str, Any]]:
             ]
 
         message = (
-            "I’m really sorry you’re going through a tough time — that sounds hard. Here are a few small things that might help right now:\n\n"
+            "I'm really sorry you're going through a tough time — that sounds hard. Here are a few small things that might help right now:\n\n"
             + "\n".join(f"- {s}" for s in suggestions)
             + "\n\nIf you'd like, I can guide you through one of these step-by-step, or help find other support."
         )
@@ -536,41 +529,3 @@ def mood_support(text: str) -> Tuple[str, Dict[str, Any]]:
     metadata = {"detected_mood": mood, "confidence": round(float(confidence), 2), "severity": "low"}
 
     return (message, metadata)
-
-# -----------------------
-# If run as a script: quick local tests (non-destructive)
-# -----------------------
-if __name__ == "__main__":
-    print("tools.py quick test\n-------------------")
-    ts = Toolset()
-    print("Available tools:", ts.list_tools())
-
-    # Duck test
-    q = "What is linear regression?"
-    print("\nDuck search sample for:", q)
-    out = duck_search(q)
-    print("abstract:", out.get("abstract")[:300])
-    print("related topics (first 3):", out.get("related_topics")[:3])
-
-    # Mood support tests
-    tests = [
-        "I'm feeling great today, productive and happy!",
-        "I've been so tired and lonely lately, I don't want to talk to anyone.",
-        "I feel like I might kill myself",
-        "I'm worried about my exams and I'm anxious",
-        ""
-    ]
-    print("\nMood support tests:")
-    for t in tests:
-        msg, meta = mood_support(t)
-        print("Input:", repr(t))
-        print("Message:", msg)
-        print("Meta:", meta)
-        print("-" * 40)
-
-    # Note: the following tests require proper LLM/embeddings config and files:
-    # - ingest_documents(['path/to/sample.pdf'])
-    # - summarize_document('path/to/sample.pdf')
-    # - pdf_qa('What is the main result of chapter 2?')
-
-    print("\nQuick note: ingest/summarize/pdf_qa require configured embeddings/LLM and local files.")

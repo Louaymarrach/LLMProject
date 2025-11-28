@@ -1,5 +1,5 @@
 """
- python ingest.py --docs_folder ./data
+ python ingest.py --docs_folder ./data ./uploads
 """
 import os
 import argparse

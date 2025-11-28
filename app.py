@@ -1,11 +1,10 @@
 """
 app.py - Streamlit UI for the LAU Chatbot and tools.
 
-Place your CSS in `style.css` next to this file (already provided the styling).
 This app expects:
- - tools.py in the same folder (Toolset)
- - main_agent.py (AgentInterface) in the same folder
- - .env configured for any API keys (Google generative API, etc.)
+ - tools.py (Toolset)
+ - main_agent.py (AgentInterface)
+ - .env configured for any API keys
 """
 
 import os
@@ -18,7 +17,7 @@ load_dotenv()
 
 st.set_page_config(page_title="LAU Chatbot", layout="wide", initial_sidebar_state="auto")
 
-# Load local CSS (style.css must exist in same directory)
+# Load local CSS
 def local_css(file_name: str):
     if os.path.exists(file_name):
         with open(file_name) as f:
@@ -54,7 +53,6 @@ col1, col2 = st.columns([2, 1])
 # ----------------- Left: Chat -----------------
 with col1:
     st.header("Chat")
-    #st.markdown('<div class="section-card blue">', unsafe_allow_html=True)
 
     # Initialize chat history if not present
     if "chat_history" not in st.session_state:
@@ -101,7 +99,7 @@ with col1:
             meta = chat.get("meta") or {}
             method = meta.get("method")
 
-            # Small label: where the answer came from
+            # where the answer came from
             if method:
                 if method == "RAG":
                     source_label = "Answer source: Ingested documents (RAG)"
@@ -210,7 +208,7 @@ with col2:
 
     st.markdown("</div>", unsafe_allow_html=True)
 
-# Footer / small tips
+# Footer / tips
 st.markdown(
     "<div style='margin-top:18px;color:#6b7280'>Tip: after ingesting, you can ask document-specific questions with the 'Ask documents (RAG)' box.</div>",
     unsafe_allow_html=True,

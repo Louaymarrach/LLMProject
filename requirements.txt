@@ -22,7 +22,7 @@ pandas>=2.3.3
 # Optional front-end / app
 streamlit>=1.51.0
 
-# OpenAI (if you also want to use OpenAI models)
+# OpenAI
 openai>=2.7.2
 streamlit==1.51.0
 python-dotenv==1.0.1
