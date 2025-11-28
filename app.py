@@ -1,7 +1,7 @@
 """
 app.py - Streamlit UI for the LAU Chatbot and tools.
 
-Place your CSS in `style.css` next to this file (you already provided the styling).
+Place your CSS in `style.css` next to this file (already provided the styling).
 This app expects:
  - tools.py in the same folder (Toolset)
  - main_agent.py (AgentInterface) in the same folder
