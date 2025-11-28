@@ -39,12 +39,7 @@ local_css("style.css")
 # Title
 st.title("LAU Chatbot")
 
-# Sidebar
-st.sidebar.header("Settings & Tools")
-uploaded = st.sidebar.file_uploader("Upload documents for RAG (PDF/TXT)", accept_multiple_files=True, type=["pdf", "txt"])
-st.sidebar.markdown("**Note:** Uploaded files will be saved to the `uploads/` folder and ingested when you click the Ingest button below.")
-st.sidebar.markdown("---")
-st.sidebar.markdown("**API usage**: Ensure your API keys (e.g. Google) are set in `.env`.")
+st.markdown('<div class="section-card">', unsafe_allow_html=True)
 
 # Ensure uploads dir exists
 os.makedirs("uploads", exist_ok=True)
@@ -58,8 +53,8 @@ col1, col2 = st.columns([2, 1])
 
 # ----------------- Left: Chat -----------------
 with col1:
-    st.markdown('<div class="section-card blue">', unsafe_allow_html=True)
     st.header("Chat")
+    #st.markdown('<div class="section-card blue">', unsafe_allow_html=True)
 
     # Initialize chat history if not present
     if "chat_history" not in st.session_state:
@@ -146,16 +141,6 @@ with col1:
 
 # ----------------- Right: Tools & Uploads -----------------
 with col2:
-    st.markdown('<div class="section-card">', unsafe_allow_html=True)
-    st.header("Tools")
-
-    # Keyword example
-    if st.button("Run example: extract keywords from sample"):
-        sample = "This project implements a search-and-summarize pipeline for university documents and tools."
-        kws = agent.keyword_extractor_tool(sample)
-        st.write("Keywords:", kws)
-
-    st.markdown("---")
 
     # Mood support
     st.header("Mental Health Support (Non-clinical)")
